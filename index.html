@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#24140b">
+  <title>Clark Family Cabin — Huckleberry Bucket</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <section id="startScreen" class="start-screen" aria-label="Clark Family Cabin startup screen">
+    <img src="startup.png" alt="Clark Family Cabin">
+    <button id="startHotspot" class="start-hotspot" aria-label="Pick Huckleberries"></button>
+  </section>
+
+  <section id="lobbyScreen" class="lobby-screen hidden">
+    <div class="lobby-shell">
+      <button id="lobbyHomeBtn" class="back-button" aria-label="Back to cabin">← Cabin</button>
+      <div class="wood-sign">
+        <h1>Huckleberry Bucket</h1>
+        <p>Online Multiplayer</p>
+      </div>
+
+      <div id="entryPanel" class="parchment-panel">
+        <label>Your name</label>
+        <input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name">
+        <div class="lobby-choice">
+          <button id="createBtn" class="big-button purple">Create Room</button>
+          <div class="or">or</div>
+          <div class="join-row">
+            <input id="roomCodeInput" maxlength="4" autocapitalize="characters" placeholder="ROOM CODE">
+            <button id="joinBtn" class="big-button green">Join Room</button>
+          </div>
+        </div>
+        <p id="entryError" class="error-text"></p>
+      </div>
+
+      <div id="roomPanel" class="parchment-panel hidden">
+        <div class="room-code-block">
+          <span>ROOM</span>
+          <strong id="roomCodeText">----</strong>
+          <button id="shareBtn" class="tiny-button">Share</button>
+        </div>
+        <div id="lobbyPlayers" class="lobby-players"></div>
+        <div id="hostControls" class="host-controls"></div>
+        <button id="leaveLobbyBtn" class="text-button">Leave room</button>
+      </div>
+    </div>
+  </section>
+
+  <main id="gameScreen" class="game-screen hidden">
+    <header class="game-header">
+      <button id="gameHomeBtn" class="icon-button" aria-label="Leave room">⌂</button>
+      <div>
+        <h1>Huckleberry Bucket</h1>
+        <p id="handLabel">Hand 1 of 5</p>
+      </div>
+      <button id="rulesBtn" class="icon-button" aria-label="Rules">?</button>
+    </header>
+
+    <div class="room-strip">Room <b id="gameRoomCode"></b><span id="connectionBadge">● Connected</span></div>
+
+    <section id="opponents" class="opponents"></section>
+
+    <section class="table-stage">
+      <div class="draw-area">
+        <button id="deckButton" class="deck-button" aria-label="Pick another card">
+          <img src="card-back.png" alt="Berry patch deck">
+          <span>Berry Patch</span>
+        </button>
+        <div class="latest-wrap">
+          <div id="latestPlaceholder" class="latest-placeholder">Latest card</div>
+          <img id="latestCard" class="latest-card hidden" alt="Latest card drawn">
+          <div id="latestWho" class="latest-who"></div>
+        </div>
+      </div>
+      <div id="message" class="message">Waiting for the game...</div>
+      <div id="eventLog" class="event-log"></div>
+    </section>
+
+    <section id="playerPanel" class="player-panel"></section>
+
+    <nav class="action-bar">
+      <button id="pickBtn" class="primary-action">🫐 Pick Another</button>
+      <button id="breakBtn" class="secondary-action">☕ Take a Break</button>
+    </nav>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <h2 id="modalTitle"></h2>
+      <div id="modalContent"></div>
+      <div id="modalActions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
