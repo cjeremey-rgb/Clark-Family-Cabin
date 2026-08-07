@@ -7,7 +7,7 @@ const ASSETS = {
   giant:'giant.png',mother:'mother.png',perfect:'perfect.png',unripe:'unripe.png',leaf:'leaf.png',twig:'twig.png',bug:'bug.png',
   bugspray:'bugspray.png',organizer:'organizer.png',evie:'evie.png',spill:'spill.png',rain:'rain.png'
 };
-const AVATARS = ['🙂','🧢','👩','🧔','👱','👵'];
+const AVATARS = ['A','B','C','D','E','F'];
 let roomState = null;
 let playerKey = localStorage.getItem('cfcPlayerKey') || crypto.randomUUID();
 let playerName = localStorage.getItem('cfcPlayerName') || '';
@@ -43,9 +43,33 @@ function ackHandler(result){
 
 
 
+
+function setEntryTab(which){
+  const create=which==='create';
+  $('#createPane')?.classList.toggle('hidden',!create);
+  $('#joinPane')?.classList.toggle('hidden',create);
+  $('#createTab')?.classList.toggle('active',create);
+  $('#joinTab')?.classList.toggle('active',!create);
+}
+$('#createTab')?.addEventListener('click',()=>setEntryTab('create'));
+$('#joinTab')?.addEventListener('click',()=>setEntryTab('join'));
+if(queryRoom) setEntryTab('join'); else setEntryTab('create');
+
 document.querySelectorAll('.player-count button').forEach(btn=>btn.addEventListener('click',()=>{
   selectedMaxPlayers=Number(btn.dataset.n)||3;
-  document.querySelectorAll('.player-count button').forEach(b=>b.classList.toggle('selected',b===btn));
+  
+function setEntryTab(which){
+  const create=which==='create';
+  $('#createPane')?.classList.toggle('hidden',!create);
+  $('#joinPane')?.classList.toggle('hidden',create);
+  $('#createTab')?.classList.toggle('active',create);
+  $('#joinTab')?.classList.toggle('active',!create);
+}
+$('#createTab')?.addEventListener('click',()=>setEntryTab('create'));
+$('#joinTab')?.addEventListener('click',()=>setEntryTab('join'));
+if(queryRoom) setEntryTab('join'); else setEntryTab('create');
+
+document.querySelectorAll('.player-count button').forEach(b=>b.classList.toggle('selected',b===btn));
 }));
 $('#lobbyHomeBtn').onclick = () => { if(currentRoomCode) socket.emit('leaveRoom'); location.href='index.html'; };
 $('#createBtn').onclick = () => {
@@ -109,8 +133,8 @@ function renderGame(state){
   const me = state.players.find(p=>p.isYou);
   const meIndex = state.players.findIndex(p=>p.isYou);
   const opponents = state.players.filter(p=>!p.isYou);
-  $('#opponents').innerHTML = opponents.map((p,i)=>playerHTML(p,state,false,AVATARS[(i+1)%AVATARS.length])).join('');
-  $('#playerPanel').innerHTML = me ? playerHTML(me,state,true,AVATARS[0]) : '';
+  $('#opponents').innerHTML = opponents.map((p,i)=>playerHTML(p,state,false,(p.name||'?').slice(0,1).toUpperCase())).join('');
+  $('#playerPanel').innerHTML = me ? playerHTML(me,state,true,(me.name||'Y').slice(0,1).toUpperCase()) : '';
   showLatest(state.latestCard,state.players);
   renderLog(state.log);
   updateControls(state,me,meIndex);

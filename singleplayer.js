@@ -73,7 +73,7 @@ function playerHTML(p,you=false){
   const cards=p.cards.length
     ? p.cards.map(c=>`<div class="bucket-card"><img src="${c.img}" alt="${c.name}" title="${c.name}"></div>`).join('')
     : '<div class="empty-bucket">Empty metal bucket</div>';
-  const avatar=p.index===0?'🙂':p.index===1?'🧢':'👩';
+  const avatar=(p.name||'?').slice(0,1).toUpperCase();
   return `<article class="player-card ${you?'you':''} ${isTurn?'turn':''}"><div class="player-head"><div class="avatar">${avatar}</div><div><div class="player-name">${p.name}${you?' (You)':''}</div><div class="player-state">${state}</div></div><div class="score-badge">${score(p)}<br><small>BUCKET</small></div></div><div class="bucket-strip">${cards}</div><div class="player-state">Trip total: <b>${p.total}</b>${p.multiplier>1?` • Perfect Bush x${p.multiplier}`:''}${p.divisors?` • Spill ÷${Math.pow(2,p.divisors)}`:''}</div></article>`;
 }
 function render(){

@@ -1,23 +1,30 @@
-# Clark Family Cabin — Huckleberry Bucket Online V2
+# Clark Family Cabin — Huckleberry Bucket
 
-This version includes BOTH game modes from the home flow:
+Mobile-first web game with matching Single Player and Online Multiplayer modes.
 
-1. Open the cabin startup screen.
-2. Tap **Pick Huckleberries**.
-3. Choose **Single Player** or **Multiplayer**.
+## Run
 
-## Single Player
-Runs entirely in the browser against Mara and Cole. No room or internet connection is required once the site is loaded.
-
-## Multiplayer
-Create a room, share its 4-character code/link, and play with 2–6 people. Multiplayer game state is authoritative on the Node/Socket.IO server.
-
-## Run locally
 ```bash
 npm install
 npm start
 ```
-Then visit `http://localhost:3000`.
 
-## File layout
-All HTML, JavaScript, CSS, SVG, and PNG assets are in the project root. There is no `public` folder.
+Then open `http://localhost:3000` on a phone or desktop browser.
+
+## Modes
+
+- **Single Player** — you play the same game against two computer-controlled pickers.
+- **Multiplayer** — 2–6 real players join a shared room with a 4-character room code.
+
+Single Player and Multiplayer share the same card art, game layout, rules, animations, scoring, and special-card behavior. The only intended difference is who controls the other players.
+
+## Core rules
+
+- On your turn choose **Pick Another** or **Take a Break**.
+- Drawn cards resolve immediately.
+- Two Bugs ruin a bucket unless Bug Spray removes one.
+- Perfect Bush doubles the whole bucket.
+- Evie removes a chosen player's highest-value numbered Huckleberry card.
+- Bucket Spill divides a chosen player's bucket by two.
+- Rain ends the hand immediately and starts Bucket Inspection.
+- Five hands are played; cumulative score wins the trip.

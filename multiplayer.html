@@ -5,9 +5,12 @@
   <div class="lobby-shell wide-lobby"><button id="lobbyHomeBtn" class="back-button">← Back</button>
     <div class="wood-sign hanging-sign"><h1>Multiplayer</h1><p>Pick Huckleberries</p></div>
     <div id="entryPanel" class="entry-grid">
-      <section class="parchment-panel framed-panel"><h2>Create Room</h2><label>Your name</label><input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><label class="mini-label">Max players</label><div class="player-count"><button data-n="2">2</button><button data-n="3" class="selected">3</button><button data-n="4">4</button><button data-n="5">5</button><button data-n="6">6</button></div><button id="createBtn" class="big-button green">Create Room</button></section>
-      <div class="share-plaque">Share the code<br>with friends!</div>
-      <section class="parchment-panel framed-panel"><h2>Join Room</h2><label>Enter room code</label><input id="roomCodeInput" maxlength="4" autocapitalize="characters" placeholder="ABCD"><label class="mini-label">Your name</label><input id="joinNameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><button id="joinBtn" class="big-button green">Join Room</button></section>
+      <div class="mp-tabs">
+        <button id="createTab" class="mp-tab active">Create Room</button>
+        <button id="joinTab" class="mp-tab">Join Room</button>
+      </div>
+      <section id="createPane" class="parchment-panel framed-panel mp-pane"><h2>Create a New Room</h2><label>Your name</label><input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><label class="mini-label">Max players</label><div class="player-count"><button data-n="2">2</button><button data-n="3" class="selected">3</button><button data-n="4">4</button><button data-n="5">5</button><button data-n="6">6</button></div><button id="createBtn" class="big-button green">Create Room</button><p class="panel-help">Create a room and share the 4-character code with your family. Everyone joins the same room to play together.</p></section>
+      <section id="joinPane" class="parchment-panel framed-panel mp-pane hidden"><h2>Join an Existing Room</h2><label>Enter room code</label><input id="roomCodeInput" maxlength="4" autocapitalize="characters" placeholder="ABCD"><label class="mini-label">Your name</label><input id="joinNameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><button id="joinBtn" class="big-button green">Join Room</button><p class="panel-help">Ask the room host for the 4-character code and enter it above to join the game.</p></section>
       <p id="entryError" class="error-text full"></p>
     </div>
     <div id="roomPanel" class="parchment-panel framed-panel hidden"><div class="room-code-block"><span>ROOM</span><strong id="roomCodeText">----</strong><button id="shareBtn" class="tiny-button">Share</button></div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="host-controls"></div><button id="leaveLobbyBtn" class="text-button">Leave room</button></div>
