@@ -121,7 +121,7 @@ function renderGame(state){
 
 function playerHTML(p,state,you=false){
   const stateText = p.busted ? 'BUCKET RUINED' : p.takingBreak ? 'TAKING A BREAK' : p.connected ? 'PICKING' : 'DISCONNECTED';
-  const imgs = p.cards.length ? p.cards.map(c=>`<img src="${cardImage(c)}" alt="${esc(c.name)}" title="${esc(c.name)}">`).join('') : '<div class="empty-bucket">Empty metal bucket</div>';
+  const imgs = p.cards.length ? p.cards.map(c=>`<div class="bucket-card"><img src="${cardImage(c)}" alt="${esc(c.name)}" title="${esc(c.name)}"></div>`).join('') : '<div class="empty-bucket">Empty metal bucket</div>';
   const isTurn = state.phase==='playing' && state.players[state.turnIndex]?.key === p.key;
   return `<article class="player-card ${you?'you':''} ${isTurn?'turn':''}"><div class="player-head"><div class="avatar">${AVATARS[p.index%AVATARS.length]}</div><div><div class="player-name">${esc(p.name)}${you?' (You)':''}</div><div class="player-state">${stateText}</div></div><div class="score-badge">${p.score}<br><small>BUCKET</small></div></div><div class="bucket-strip">${imgs}</div><div class="player-state">Trip total: <b>${p.total}</b>${p.multiplier>1?` • Perfect Bush x${p.multiplier}`:''}${p.divisors?` • Spill ÷${Math.pow(2,p.divisors)}`:''}</div></article>`;
 }
@@ -148,8 +148,11 @@ function maybeTargetModal(state,me){
   if(openModalKind==='target') return;
   const targets=state.players.filter(p=>pending.allowedKeys.includes(p.key));
   openModalKind='target';
-  openModal(pending.card.type==='evie'?'🐶 Where should Evie go?':'🪣 Whose bucket spills?',
-    `<p>${pending.card.type==='evie'?'Evie will eat the highest-value numbered huckleberry card.':'The target bucket will be divided by two.'}</p>`,
+  const isEvie=pending.card.type==='evie';
+  const content=isEvie
+    ? `<div class="special-target-card"><img src="${cardImage(pending.card)}" alt="Evie — The Berry Bandit"></div><p class="target-prompt"><b>Who should Evie visit?</b><br>She will eat that player's highest numbered huckleberry card.</p>`
+    : `<p class="target-prompt">Choose whose bucket should be divided by two.</p>`;
+  openModal(isEvie?'🐶 Evie — The Berry Bandit':'🪣 Bucket Spill',content,
     targets.map(p=>({label:`${p.name} — ${p.score} points`,action:()=>{closeModal();socket.emit('chooseTarget',{targetKey:p.key})}})));
 }
 function maybePhaseModal(state,me){

@@ -350,6 +350,9 @@ function resolveTarget(room, actorIndex, targetIndex) {
       target.discarded.push(card);
       log(room, `🐶 Evie visits ${target.name}, but there are no ripe huckleberries to eat.`);
     }
+    // Evie is an instant action card: after the target is chosen, neither Evie nor
+    // the eaten berry remains visible in a bucket or as the latest drawn card.
+    room.latestCard = null;
   } else {
     target.divisors += 1;
     target.discarded.push(card);

@@ -28,3 +28,176 @@ linear-gradient(rgba(32,17,9,.12),rgba(32,17,9,.12)),repeating-linear-gradient(0
 .mode-sign{margin:18px auto 24px;max-width:520px}.mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}.mode-card{appearance:none;border:7px solid #6f3e20;border-radius:18px;padding:22px 14px 18px;background:linear-gradient(#f8edcf,#dfc391);box-shadow:0 0 0 3px #d5a75f inset,0 11px 0 #3a1d0e,0 20px 35px #0008;color:#2a1b12;text-align:center;cursor:pointer}.mode-card h2{font-family:Georgia,serif;text-transform:uppercase;margin:8px 0 5px;font-size:25px}.mode-card p{min-height:48px;font-weight:700;color:#624d3b;font-size:14px}.mode-card span{display:block;margin-top:13px;border-radius:10px;background:linear-gradient(#6e973c,#3f671d);color:#fff;padding:12px;font-weight:1000;box-shadow:0 4px 0 #274311}.mode-icon{font-size:62px;filter:drop-shadow(0 5px 3px #0003)}
 .wide-lobby{width:min(880px,100%)}.rustic-lobby{padding:calc(18px + env(safe-area-inset-top)) 14px calc(30px + env(safe-area-inset-bottom));background-image:url('cabin-wall.svg');background-size:900px auto}.hanging-sign{max-width:560px;margin:8px auto 28px;position:relative}.hanging-sign:before,.hanging-sign:after{content:"";position:absolute;width:4px;height:50px;background:#3b2618;top:-46px}.hanging-sign:before{left:20%}.hanging-sign:after{right:20%}.entry-grid{display:grid;grid-template-columns:1fr 120px 1fr;gap:18px;align-items:stretch;position:relative;z-index:1}.framed-panel{border:8px solid #6a3c1f;box-shadow:0 0 0 3px #d0a15a inset,0 13px 0 #341a0c,0 22px 42px #0009;background:linear-gradient(135deg,#fbefd0,#e5c994 55%,#d7b577)}.framed-panel h2{font-family:Georgia,serif;text-transform:uppercase;text-align:center;font-size:26px;margin:0 0 18px;color:#3a2417}.mini-label{margin-top:15px!important;text-align:center}.player-count{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:7px 0 16px}.player-count button{border:3px solid #8c6538;border-radius:8px;background:#f7e8c2;color:#322014;font-weight:1000;padding:10px 0;box-shadow:0 3px 0 #8b643b}.player-count button.selected{background:linear-gradient(#6e9139,#405f1d);color:#fff;border-color:#334f18}.share-plaque{align-self:center;background:linear-gradient(#6d4327,#432514);color:#f4d59b;text-align:center;font-family:Georgia,serif;font-weight:1000;text-transform:uppercase;border:4px solid #2d170c;border-radius:10px;padding:22px 8px;box-shadow:0 7px 0 #1d0f08,0 15px 26px #0008}.full{grid-column:1/-1;text-align:center}.entry-grid input{font-size:18px!important}.entry-grid #roomCodeInput{text-align:center;letter-spacing:.3em;text-transform:uppercase;font-size:28px!important}.room-code-block{box-shadow:inset 0 0 18px #0004}
 @media(max-width:720px){.mode-cards{grid-template-columns:1fr}.entry-grid{grid-template-columns:1fr}.share-plaque{display:none}.hanging-sign{margin-top:18px}.framed-panel{border-width:6px}.mode-card p{min-height:0}}
+
+/* Mobile-first gameplay refinement: consistent card frames + focused action modals */
+.game-screen{
+  padding:calc(6px + env(safe-area-inset-top)) 7px calc(92px + env(safe-area-inset-bottom));
+}
+.game-header{
+  max-width:560px;
+  margin:0 auto 6px;
+  grid-template-columns:40px 1fr 40px;
+  padding:6px 7px;
+  border-radius:14px;
+}
+.game-header h1{font-size:18px;line-height:1.05}
+.game-header p{font-size:10px}
+.icon-button{width:34px;height:34px;font-size:20px}
+.room-strip{max-width:560px;margin-bottom:5px}
+.opponents{
+  max-width:560px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  overflow:visible;
+  padding:0;
+}
+.opponents .player-card{min-width:0;width:100%}
+.player-panel{max-width:560px}
+.player-card{
+  padding:7px;
+  border-radius:13px;
+}
+.player-card.you{margin-top:7px}
+.player-head{gap:5px}
+.avatar{width:32px;height:32px;font-size:20px}
+.player-name{font-size:13px;line-height:1}
+.player-state{font-size:9px}
+.score-badge{font-size:11px;padding:4px 6px}
+
+/* Every bucket card uses exactly the same outer dimensions, regardless of source image size. */
+.bucket-strip{
+  gap:5px;
+  min-height:104px;
+  padding:6px 1px 3px;
+  align-items:flex-start;
+}
+.bucket-card{
+  flex:0 0 68px;
+  width:68px;
+  height:96px;
+  padding:2px;
+  border-radius:8px;
+  background:linear-gradient(#f8edcf,#dfc89a);
+  border:2px solid #6a4530;
+  box-shadow:0 3px 7px #0006;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+.bucket-card img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  border-radius:5px;
+  background:#f4e5c1;
+}
+.empty-bucket{height:96px}
+
+.table-stage{
+  max-width:560px;
+  margin:7px auto 0;
+  padding:8px;
+  border-radius:17px;
+}
+.draw-area{
+  grid-template-columns:86px minmax(0,1fr);
+  gap:8px;
+}
+.deck-button img{
+  width:72px;
+  height:auto;
+  max-height:122px;
+  border-radius:9px;
+}
+.deck-button span{font-size:10px;margin-top:6px}
+.latest-wrap{height:178px;min-width:0}
+.latest-card{
+  width:auto;
+  height:166px;
+  max-width:100%;
+  max-height:none;
+  object-fit:contain;
+  border-radius:10px;
+}
+.latest-placeholder{width:112px;height:158px;font-size:12px}
+.latest-who{font-size:9px;bottom:0}
+.message{font-size:13px;margin-top:7px;min-height:19px}
+.event-log{max-height:72px;font-size:10px;margin-top:5px;padding:6px}
+.action-bar{
+  gap:7px;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+}
+.action-bar button{padding:13px 6px;font-size:14px;border-radius:12px}
+
+/* Evie / targeted action presentation */
+.modal{padding:10px;align-items:center}
+.modal-card{
+  width:min(430px,96vw);
+  max-height:94svh;
+  padding:13px;
+  border-width:4px;
+  border-radius:17px;
+}
+.modal-card h2{text-align:center;font-size:21px;margin-bottom:7px}
+.special-target-card{
+  display:grid;
+  place-items:center;
+  width:100%;
+  margin:2px auto 8px;
+}
+.special-target-card img{
+  display:block;
+  width:auto;
+  height:min(51svh,470px);
+  max-width:94%;
+  object-fit:contain;
+  border-radius:14px;
+  box-shadow:0 12px 26px #0007;
+}
+.target-prompt{
+  text-align:center;
+  margin:8px 3px 10px;
+  font-size:13px;
+  line-height:1.3;
+}
+.modal-actions{
+  grid-template-columns:1fr;
+  gap:7px;
+  margin-top:8px;
+}
+.modal-actions button{
+  padding:12px 10px;
+  font-size:14px;
+  border:3px solid #264625;
+  box-shadow:0 4px 0 #173016;
+}
+.spray-pair img{height:min(40svh,290px)}
+
+@media(min-width:700px){
+  .game-header,.room-strip,.opponents,.player-panel,.table-stage{max-width:760px}
+  .game-header h1{font-size:22px}
+  .game-header p{font-size:12px}
+  .opponents{gap:8px}
+  .bucket-card{flex-basis:78px;width:78px;height:110px}
+  .bucket-strip{min-height:118px}
+  .draw-area{grid-template-columns:130px 1fr}
+  .deck-button img{width:105px;max-height:165px}
+  .latest-wrap{height:225px}
+  .latest-card{height:210px}
+  .event-log{max-height:112px;font-size:12px}
+  .action-bar{padding-left:max(10px,calc((100vw - 760px)/2));padding-right:max(10px,calc((100vw - 760px)/2))}
+}
+
+/* Keep the latest-card display on one standardized card footprint too. */
+.latest-card{
+  width:118px;
+  height:166px;
+  padding:2px;
+  background:linear-gradient(#f8edcf,#dfc89a);
+  border:2px solid #6a4530;
+  object-fit:contain;
+}
+@media(min-width:700px){.latest-card{width:150px;height:210px}}
