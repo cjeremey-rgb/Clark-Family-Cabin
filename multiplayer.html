@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#24140b">
+<title>Huckleberry Bucket — Multiplayer</title><link rel="stylesheet" href="styles.css"></head><body>
+<section id="lobbyScreen" class="lobby-screen rustic-lobby">
+  <div class="lobby-shell wide-lobby"><button id="lobbyHomeBtn" class="back-button">← Back</button>
+    <div class="wood-sign hanging-sign"><h1>Multiplayer</h1><p>Pick Huckleberries</p></div>
+    <div id="entryPanel" class="entry-grid">
+      <section class="parchment-panel framed-panel"><h2>Create Room</h2><label>Your name</label><input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><label class="mini-label">Max players</label><div class="player-count"><button data-n="2">2</button><button data-n="3" class="selected">3</button><button data-n="4">4</button><button data-n="5">5</button><button data-n="6">6</button></div><button id="createBtn" class="big-button green">Create Room</button></section>
+      <div class="share-plaque">Share the code<br>with friends!</div>
+      <section class="parchment-panel framed-panel"><h2>Join Room</h2><label>Enter room code</label><input id="roomCodeInput" maxlength="4" autocapitalize="characters" placeholder="ABCD"><label class="mini-label">Your name</label><input id="joinNameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><button id="joinBtn" class="big-button green">Join Room</button></section>
+      <p id="entryError" class="error-text full"></p>
+    </div>
+    <div id="roomPanel" class="parchment-panel framed-panel hidden"><div class="room-code-block"><span>ROOM</span><strong id="roomCodeText">----</strong><button id="shareBtn" class="tiny-button">Share</button></div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="host-controls"></div><button id="leaveLobbyBtn" class="text-button">Leave room</button></div>
+  </div>
+</section>
+<main id="gameScreen" class="game-screen hidden"><header class="game-header"><button id="gameHomeBtn" class="icon-button">⌂</button><div><h1>Huckleberry Bucket</h1><p id="handLabel">Hand 1 of 5</p></div><button id="rulesBtn" class="icon-button">?</button></header><div class="room-strip">Room <b id="gameRoomCode"></b><span id="connectionBadge">● Connected</span></div><section id="opponents" class="opponents"></section><section class="table-stage"><div class="draw-area"><button id="deckButton" class="deck-button"><img src="card-back.png"><span>Berry Patch</span></button><div class="latest-wrap"><div id="latestPlaceholder" class="latest-placeholder">Latest card</div><img id="latestCard" class="latest-card hidden"><div id="latestWho" class="latest-who"></div></div></div><div id="message" class="message">Waiting for the game...</div><div id="eventLog" class="event-log"></div></section><section id="playerPanel" class="player-panel"></section><nav class="action-bar"><button id="pickBtn" class="primary-action">🫐 Pick Another</button><button id="breakBtn" class="secondary-action">☕ Take a Break</button></nav></main>
+<div id="modal" class="modal hidden"><div class="modal-card"><h2 id="modalTitle"></h2><div id="modalContent"></div><div id="modalActions" class="modal-actions"></div></div></div>
+<script src="/socket.io/socket.io.js"></script><script src="multiplayer.js"></script></body></html>

@@ -17,13 +17,15 @@ const ROOT = __dirname;
 const rooms = new Map();
 
 const CLIENT_FILES = new Set([
-  'index.html','styles.css','app.js','startup.png','card-back.png',
+  'index.html','singleplayer.html','multiplayer.html','styles.css','singleplayer.js','multiplayer.js','cabin-wall.svg','startup.png','card-back.png',
   'berry1.png','berry2.png','berry3.png','berry4.png','berry5.png','berry6.png','berry7.png','berry8.png','berry9.png','berry10.png',
   'giant.png','mother.png','perfect.png','unripe.png','leaf.png','twig.png','bug.png','bugspray.png','organizer.png','evie.png','spill.png','rain.png'
 ]);
 
 app.get('/healthz', (_req, res) => res.json({ ok: true, rooms: rooms.size }));
 app.get('/', (_req, res) => res.sendFile(path.join(ROOT, 'index.html')));
+app.get('/singleplayer', (_req,res)=>res.sendFile(path.join(ROOT,'singleplayer.html')));
+app.get('/multiplayer', (_req,res)=>res.sendFile(path.join(ROOT,'multiplayer.html')));
 app.get('/:file', (req, res) => {
   if (!CLIENT_FILES.has(req.params.file)) return res.status(404).send('Not found');
   res.sendFile(path.join(ROOT, req.params.file));
@@ -119,6 +121,7 @@ function sanitizeRoom(room, viewerKey) {
     hostKey: room.hostKey,
     hand: room.hand,
     maxHands: room.maxHands,
+    maxPlayers: room.maxPlayers || 6,
     turnIndex: room.turnIndex,
     latestCard: room.latestCard,
     pendingTarget: room.pendingTarget ? {
@@ -359,12 +362,12 @@ function resolveTarget(room, actorIndex, targetIndex) {
 }
 
 io.on('connection', socket => {
-  socket.on('createRoom', ({ name, playerKey } = {}, ack = () => {}) => {
+  socket.on('createRoom', ({ name, playerKey, maxPlayers } = {}, ack = () => {}) => {
     const key = String(playerKey || crypto.randomUUID()).slice(0,80);
     const code = roomCode();
     const player = freshPlayer({ key, name, socketId: socket.id });
     const room = {
-      code, hostKey: key, phase: 'lobby', hand: 1, maxHands: 5,
+      code, hostKey: key, phase: 'lobby', hand: 1, maxHands: 5, maxPlayers: Math.min(6,Math.max(2,Number(maxPlayers)||3)),
       turnIndex: 0, players: [player], deck: [], latestCard: null,
       pendingTarget: null, locked: false, inspection: null, winner: null,
       log: []
@@ -391,7 +394,7 @@ io.on('connection', socket => {
       return emitRoom(room);
     }
     if (room.phase !== 'lobby') return ack({ ok:false, message:'That game has already started.' });
-    if (room.players.length >= 6) return ack({ ok:false, message:'That room is full (6 players max).' });
+    if (room.players.length >= (room.maxPlayers||6)) return ack({ ok:false, message:`That room is full (${room.maxPlayers||6} players max).` });
     player = freshPlayer({ key, name, socketId: socket.id });
     room.players.push(player);
     setSocketRoom(socket, room, player);
