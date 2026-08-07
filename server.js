@@ -17,10 +17,10 @@ const ROOT = __dirname;
 const rooms = new Map();
 
 const CLIENT_FILES = new Set([
-  'index.html','singleplayer.html','multiplayer.html','styles.css','singleplayer.js','multiplayer.js','cabin-wall.svg','startup.png','bucket-berries.png','card-back.png',
+  'index.html','singleplayer.html','multiplayer.html','styles.css','singleplayer.js','multiplayer.js','startup.png','mode-bucket.png','card-back.png',
   'berry1.png','berry2.png','berry3.png','berry4.png','berry5.png','berry6.png','berry7.png','berry8.png','berry9.png','berry10.png',
   'giant.png','mother.png','perfect.png','unripe.png','leaf.png','twig.png','bug.png','bugspray.png','organizer.png','evie.png','spill.png','rain.png',
-  'screen-game-mobile.jpg','ui-panel.png','ui-player-frame.png','ui-small-panel.png','ui-sign.png','ui-btn-green.png','ui-btn-purple.png','ui-btn-red.png','ui-btn-wood.png','ui-score.png','ui-lantern.png','ui-pine.png','ui-bucket.png','ui-parchment.jpg','ui-game-wood.jpg'
+  'woodgrain-hd.jpg','parchment-hd.jpg','panel-wide.png','panel-small.png','panel-tall.png','player-frame-clean.png','sign-clean.png','button-green-clean.png','button-wood-clean.png'
 ]);
 
 app.get('/healthz', (_req, res) => res.json({ ok: true, rooms: rooms.size }));
