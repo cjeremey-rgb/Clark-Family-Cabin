@@ -339,15 +339,20 @@ function resolveTarget(room, actorIndex, targetIndex) {
   const card = pending.card;
   room.pendingTarget = null;
 
+  // Targeted action cards are not bucket cards. Remove the drawn action card
+  // from the actor as soon as its target is resolved.
+  removeCardByUid(actor, card.uid);
+
   if (card.type === 'evie') {
     const berryCards = target.cards.filter(c => c.type === 'berry');
     if (berryCards.length) {
       const high = berryCards.reduce((a,b)=>a.value >= b.value ? a : b);
       removeCardByUid(target, high.uid);
-      target.discarded.push(high, card);
+      target.discarded.push(high);
+      actor.discarded.push(card);
       log(room, `🐶 ${actor.name} sends Evie to ${target.name}. She eats the ${high.value}-point huckleberry card.`);
     } else {
-      target.discarded.push(card);
+      actor.discarded.push(card);
       log(room, `🐶 Evie visits ${target.name}, but there are no ripe huckleberries to eat.`);
     }
     // Evie is an instant action card: after the target is chosen, neither Evie nor
@@ -355,7 +360,7 @@ function resolveTarget(room, actorIndex, targetIndex) {
     room.latestCard = null;
   } else {
     target.divisors += 1;
-    target.discarded.push(card);
+    actor.discarded.push(card);
     log(room, `🪣 ${actor.name} spills ${target.name}'s bucket — its value is divided by 2.`);
   }
   room.locked = false;
@@ -459,7 +464,7 @@ io.on('connection', socket => {
     const room = rooms.get(socket.data.roomCode);
     if (!room || room.phase !== 'inspection') return;
     const p = playerBySocket(room, socket);
-    if (!p || p.key !== room.hostKey) return emitError(socket, 'Only the host can start the next hand.');
+    if (!p) return;
     if (room.hand >= room.maxHands) return finishGame(room);
     room.hand += 1;
     beginHand(room);
@@ -469,7 +474,7 @@ io.on('connection', socket => {
     const room = rooms.get(socket.data.roomCode);
     if (!room || room.phase !== 'finished') return;
     const p = playerBySocket(room, socket);
-    if (!p || p.key !== room.hostKey) return emitError(socket, 'Only the host can restart the game.');
+    if (!p) return;
     room.hand = 1;
     room.players.forEach(p => p.total = 0);
     beginHand(room);

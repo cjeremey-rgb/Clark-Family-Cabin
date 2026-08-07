@@ -72,8 +72,8 @@ $('#deckButton').onclick = () => socket.emit('pickAnother');
 $('#breakBtn').onclick = () => socket.emit('takeBreak');
 
 function leaveRoom(){ socket.emit('leaveRoom'); currentRoomCode=''; roomState=null; history.replaceState(null,'',location.pathname); $('#roomPanel').classList.add('hidden'); $('#entryPanel').classList.remove('hidden'); showScreen('lobby'); closeModal(); }
-function confirmLeave(){ openModal('Leave the Room?','<p>You can rejoin later with the same room code if the game is still active.</p>',[
-  {label:'Stay',action:closeModal},{label:'Leave Room',action:leaveRoom}
+function confirmLeave(){ openModal('Leave the Game?','<p>Are you sure you want to leave the current game?</p>',[
+  {label:'Stay',action:closeModal},{label:'Leave Game',action:leaveRoom}
 ]); }
 
 socket.on('connect', () => {
@@ -105,13 +105,12 @@ function renderLobby(state){
 
 function renderGame(state){
   showScreen('game');
-  $('#gameRoomCode').textContent = state.code;
   $('#handLabel').textContent = `Hand ${state.hand} of ${state.maxHands}`;
   const me = state.players.find(p=>p.isYou);
   const meIndex = state.players.findIndex(p=>p.isYou);
   const opponents = state.players.filter(p=>!p.isYou);
-  $('#opponents').innerHTML = opponents.map(p=>playerHTML(p,state)).join('');
-  $('#playerPanel').innerHTML = me ? playerHTML(me,state,true) : '';
+  $('#opponents').innerHTML = opponents.map((p,i)=>playerHTML(p,state,false,AVATARS[(i+1)%AVATARS.length])).join('');
+  $('#playerPanel').innerHTML = me ? playerHTML(me,state,true,AVATARS[0]) : '';
   showLatest(state.latestCard,state.players);
   renderLog(state.log);
   updateControls(state,me,meIndex);
@@ -119,11 +118,11 @@ function renderGame(state){
   maybePhaseModal(state,me);
 }
 
-function playerHTML(p,state,you=false){
-  const stateText = p.busted ? 'BUCKET RUINED' : p.takingBreak ? 'TAKING A BREAK' : p.connected ? 'PICKING' : 'DISCONNECTED';
-  const imgs = p.cards.length ? p.cards.map(c=>`<div class="bucket-card"><img src="${cardImage(c)}" alt="${esc(c.name)}" title="${esc(c.name)}"></div>`).join('') : '<div class="empty-bucket">Empty metal bucket</div>';
+function playerHTML(p,state,you=false,avatar=AVATARS[0]){
   const isTurn = state.phase==='playing' && state.players[state.turnIndex]?.key === p.key;
-  return `<article class="player-card ${you?'you':''} ${isTurn?'turn':''}"><div class="player-head"><div class="avatar">${AVATARS[p.index%AVATARS.length]}</div><div><div class="player-name">${esc(p.name)}${you?' (You)':''}</div><div class="player-state">${stateText}</div></div><div class="score-badge">${p.score}<br><small>BUCKET</small></div></div><div class="bucket-strip">${imgs}</div><div class="player-state">Trip total: <b>${p.total}</b>${p.multiplier>1?` • Perfect Bush x${p.multiplier}`:''}${p.divisors?` • Spill ÷${Math.pow(2,p.divisors)}`:''}</div></article>`;
+  const stateText = !p.connected ? 'DISCONNECTED' : p.busted ? 'BUCKET RUINED' : p.takingBreak ? 'TAKING A BREAK' : isTurn ? 'PICKING' : 'WAITING';
+  const imgs = p.cards.length ? p.cards.map(c=>`<div class="bucket-card"><img src="${cardImage(c)}" alt="${esc(c.name)}" title="${esc(c.name)}"></div>`).join('') : '<div class="empty-bucket">Empty metal bucket</div>';
+  return `<article class="player-card ${you?'you':''} ${isTurn?'turn':''}"><div class="player-head"><div class="avatar">${avatar}</div><div><div class="player-name">${esc(p.name)}${you?' (You)':''}</div><div class="player-state">${stateText}</div></div><div class="score-badge">${p.score}<br><small>BUCKET</small></div></div><div class="bucket-strip">${imgs}</div><div class="player-state">Trip total: <b>${p.total}</b>${p.multiplier>1?` • Perfect Bush x${p.multiplier}`:''}${p.divisors?` • Spill ÷${Math.pow(2,p.divisors)}`:''}</div></article>`;
 }
 function showLatest(card,players){
   const img=$('#latestCard'), ph=$('#latestPlaceholder'), who=$('#latestWho');
@@ -161,14 +160,11 @@ function maybePhaseModal(state,me){
     lastInspectionHand=state.hand; openModalKind='inspection';
     const rows=state.inspection?.rows||[];const winner=rows.find(r=>r.key===state.inspection?.handWinnerKey);
     const html=`<p>${esc(state.inspection?.reason||'Hand over.')}</p>${rows.map(r=>`<div class="inspection-row"><span><b>${esc(r.name)}</b>${r.busted?' — Bucket Ruined':''}</span><b>${r.handScore}</b></div>`).join('')}<div class="winner-banner">${winner?`${esc(winner.name)} wins the hand!`:''}</div>`;
-    const isHost=me?.key===state.hostKey;
-    openModal('🪣 Bucket Inspection',html,isHost?[{label:state.hand>=state.maxHands?'Final Results':'Next Hand',action:()=>{closeModal();socket.emit('nextHand')}}]:[]);
-    if(!isHost) $('#modalActions').innerHTML='<p style="text-align:center;font-weight:900">Waiting for the host…</p>';
+    openModal('🪣 Bucket Inspection',html,[{label:state.hand>=state.maxHands?'Final Results':'Next Hand',action:()=>{closeModal();socket.emit('nextHand')}}]);
   } else if(state.phase==='finished'){
     if(openModalKind==='finished') return; openModalKind='finished';
-    const ranked=[...state.players].sort((a,b)=>b.total-a.total); const isHost=me?.key===state.hostKey;
-    openModal('🏆 Trip Results',`${ranked.map(p=>`<div class="inspection-row"><span><b>${esc(p.name)}</b></span><b>${p.total}</b></div>`).join('')}<div class="winner-banner">${esc(state.winner?.name||ranked[0]?.name||'')} wins the trip!</div>`,isHost?[{label:'Play Again',action:()=>{closeModal();socket.emit('playAgain')}}]:[]);
-    if(!isHost) $('#modalActions').innerHTML='<p style="text-align:center;font-weight:900">Waiting for the host…</p>';
+    const ranked=[...state.players].sort((a,b)=>b.total-a.total);
+    openModal('🏆 Trip Results',`${ranked.map(p=>`<div class="inspection-row"><span><b>${esc(p.name)}</b></span><b>${p.total}</b></div>`).join('')}<div class="winner-banner">${esc(state.winner?.name||ranked[0]?.name||'')} wins the trip!</div>`,[{label:'Play Again',action:()=>{closeModal();socket.emit('playAgain')}}]);
   } else if(openModalKind==='inspection'||openModalKind==='finished'){closeModal();}
 }
 
