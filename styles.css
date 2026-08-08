@@ -103,3 +103,139 @@ body{min-height:100dvh;overflow-x:hidden}.hidden{display:none!important}button,i
 @media(min-width:700px){
   :root{--maxw:760px}.mode-shell{width:760px}.mode-cards{grid-template-columns:1fr 1fr}.mode-card{min-height:330px;text-align:center}.mode-card h2,.mode-card p{max-width:none}.mode-bucket{position:static;width:180px;height:170px;margin:4px auto;object-fit:cover}.mode-card span{display:block}.entry-grid{grid-template-columns:1fr 1fr}.player-card{padding-left:27px;padding-right:27px}.bucket-card{flex-basis:54px;width:54px;height:76px}.player-card.you .bucket-card{flex-basis:62px;width:62px;height:87px}.draw-area{grid-template-columns:120px 1fr}.deck-button img{width:100px;height:140px}.latest-wrap{min-height:225px}.latest-card,.latest-placeholder{width:150px;height:210px}
 }
+
+/* ===== V9 APPROVED CARD THEME =====
+   Master reference: approved EVIE card + Huckleberry Bucket card sheet.
+   These overrides intentionally make every screen feel like the same illustrated deck. */
+:root{
+  --ink:#2c1b13;
+  --cream:#f3e3b9;
+  --purple:#49265c;
+  --purple-light:#80539a;
+  --green:#2d693d;
+  --red:#a83d35;
+  --blue:#245f86;
+  --gold:#d8aa5e;
+}
+html,body{font-family:"Trebuchet MS",system-ui,-apple-system,"Segoe UI",sans-serif}
+.mode-screen,.rustic-lobby,.game-screen{
+  background-color:#3b1f12;
+  background-image:
+    radial-gradient(circle at 50% 0,rgba(244,208,134,.08),transparent 34%),
+    url('woodgrain-hd.jpg');
+  background-size:auto,cover;
+  background-position:center top,center top;
+}
+.mode-screen:after,.rustic-lobby:after,.game-screen:after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  box-shadow:inset 0 0 72px rgba(10,3,0,.72);
+}
+
+/* Parchment cards/panels now carry the same purple/gold edge language as EVIE. */
+.parchment-panel,.mode-card,.player-card,.modal-card,.latest-placeholder,.event-log{
+  border:3px solid var(--purple);
+  outline:2px solid rgba(215,174,97,.8);
+  outline-offset:-7px;
+  filter:drop-shadow(0 7px 10px rgba(0,0,0,.28));
+}
+.player-card,.mode-card,.parchment-panel,.modal-card{border-radius:18px}
+.player-card:before,.mode-card:before,.parchment-panel:before,.modal-card:before{
+  content:"";position:absolute;inset:10px;border:1px solid rgba(255,248,222,.65);border-radius:11px;pointer-events:none;z-index:1;
+}
+.player-card>* ,.mode-card>* ,.parchment-panel>* ,.modal-card>*{position:relative;z-index:2}
+
+.wood-sign,.hanging-sign,.game-header{
+  border:3px solid var(--purple);
+  outline:2px solid rgba(215,174,97,.78);
+  outline-offset:-7px;
+  border-radius:18px;
+  filter:drop-shadow(0 7px 9px rgba(0,0,0,.32));
+}
+.mode-sign h1,.hanging-sign h1,.game-header h1,.framed-panel h2,.modal-card h2{
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--purple);
+  letter-spacing:.025em;
+  text-shadow:0 1px rgba(255,245,215,.9);
+}
+.game-header h1{font-size:18px}
+.game-header p,.mode-sign p,.hanging-sign p{color:#59316c}
+
+/* Buttons use the card-theme purple as the primary accent. */
+.big-button,.modal-actions button,.primary-action,.player-count button.selected,.mp-tab.active{
+  background-image:url('button-green-clean.png');
+  color:#fff5db;
+}
+.primary-action{font-size:13px!important;letter-spacing:.015em}
+.secondary-action{color:#fff0cf}
+
+/* Player areas resemble cards on the wood table rather than generic web panels. */
+.player-card{background-image:url('player-frame-clean.png')}
+.player-card.turn{filter:drop-shadow(0 0 11px rgba(219,175,86,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.3));}
+.avatar{border:3px solid var(--purple);background:#f5e4b8;color:var(--purple)}
+.score-badge{
+  background:linear-gradient(180deg,#68407d,#3f2450);
+  border:2px solid #d7aa5d;
+  box-shadow:inset 0 0 0 2px rgba(255,241,202,.13),0 3px 5px rgba(0,0,0,.22);
+}
+.player-name{color:#2c1a12}.player-state{color:#73563f}
+.bucket-card img{border-radius:5px}
+
+/* Center play surface: quiet wood, letting the actual illustrated cards be the hero. */
+.table-stage{
+  background:linear-gradient(180deg,rgba(45,20,9,.23),rgba(22,9,4,.40));
+  border:2px solid rgba(216,170,90,.84);
+  box-shadow:inset 0 0 0 3px rgba(73,38,92,.55),0 10px 24px rgba(0,0,0,.34);
+}
+.deck-button img,.latest-card{border-radius:8px}
+.latest-placeholder,.event-log{
+  background-image:url('panel-small.png');
+  border-color:var(--purple);
+}
+.latest-placeholder{color:var(--purple);font-family:Georgia,serif;letter-spacing:.04em}
+.message{color:#ffe2a2}
+.latest-who{background:#452453;border:1px solid #d4a75d;color:#fff0cd}
+
+/* Multiplayer: parchment forms now read like large cards. */
+.parchment-panel input{
+  border:2px solid var(--purple);
+  background:rgba(247,231,191,.88);
+  box-shadow:inset 0 2px 5px rgba(76,39,14,.16),0 0 0 2px rgba(215,174,97,.22);
+}
+.parchment-panel input:focus{border-color:#7d4b94;box-shadow:0 0 0 3px rgba(107,64,130,.18),inset 0 2px 5px rgba(76,39,14,.15)}
+.player-count button{border:2px solid var(--purple);background:#f2dfad;color:#3c223f}
+.lobby-person{background:#f3e2b8;border:2px solid var(--purple);box-shadow:inset 0 0 0 2px rgba(216,171,92,.26)}
+.lobby-avatar{border-color:var(--purple)}
+.room-code-block{background:#452453;border:2px solid #d7aa5d}
+
+/* EVIE moment: the approved card is shown in full, as the primary event. */
+.modal{background:rgba(13,5,2,.88);backdrop-filter:blur(8px) saturate(.8)}
+.special-target-card img{
+  width:min(78vw,330px);
+  max-height:68dvh;
+  border-radius:17px;
+  filter:drop-shadow(0 18px 20px rgba(0,0,0,.65));
+}
+.target-prompt{font-size:13px!important;color:#392318}
+.modal-actions button{font-size:14px}
+
+/* Phone-first sizing: full card art remains readable and never crops. */
+@media(max-width:620px){
+  :root{--maxw:520px}
+  .mode-shell{padding-left:10px;padding-right:10px}
+  .mode-sign{margin-top:7px;margin-bottom:9px}
+  .mode-card{min-height:215px;padding:28px 24px}
+  .game-screen{padding-left:6px;padding-right:6px;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .game-header{height:58px;margin-bottom:4px}
+  .opponents{gap:5px}
+  .opponents>.player-card{flex-basis:calc(50% - 2.5px)}
+  .player-card{min-height:118px;padding:19px 16px 11px}
+  .player-card.you{min-height:136px}
+  .table-stage{margin-top:4px;padding:8px 8px 7px}
+  .draw-area{grid-template-columns:83px 1fr;gap:7px}
+  .deck-button img{width:72px;height:101px}
+  .latest-wrap{min-height:158px}
+  .latest-card,.latest-placeholder{width:108px;height:151px}
+  .event-log{height:39px;margin-top:4px}
+  .action-bar{gap:6px;padding-left:7px;padding-right:7px}
+  .action-bar button{min-height:56px}
+}

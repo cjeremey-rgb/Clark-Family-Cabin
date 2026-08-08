@@ -1,0 +1,12 @@
+HUCKLEBERRY BUCKET V9 — APPROVED CARD THEME
+
+Visual master reference:
+- EVIE — The Berry Bandit card supplied by the user (used directly as evie.png)
+- Approved Huckleberry Bucket card reference (included as card-reference-approved.jpg)
+
+Design rules:
+- Aged parchment, distressed purple/gold frame language, warm cabin wood.
+- All game cards use the same 5:7 physical ratio.
+- EVIE uses the approved black-and-tan dog artwork exactly.
+- Single Player and Multiplayer share styles and card assets.
+- Composite UI mockup screenshots are not used as gameplay backgrounds.
