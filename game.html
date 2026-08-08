@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b1409"><title>Huckleberry Bucket</title><link rel="stylesheet" href="styles.css"></head><body class="cabin-world">
+<main id="gameScreen" class="game-screen">
+<header class="game-top wood-plaque"><button id="homeBtn" class="premium-btn wood icon-btn" aria-label="Home">⌂</button><div><h1>Huckleberry Bucket</h1><p id="handLabel">Hand 1 of 5</p></div><button id="rulesBtn" class="premium-btn wood icon-btn" aria-label="Rules">?</button></header>
+<section id="opponents" class="opponents"></section>
+<section class="table-stage"><div class="draw-zone"><button id="deckButton" class="deck-button"><img src="card-back.png" alt="Berry Patch"><span>Berry Patch</span></button><div class="latest-slot"><div id="latestPlaceholder" class="latest-placeholder">Latest<br>Card</div><img id="latestCard" class="latest-card hidden" alt="Latest card"><div id="latestWho" class="latest-who hidden"></div></div><div class="discard-box">Discard<br>Pile</div></div><div id="turnMessage" class="turn-message">Waiting for the game…</div><div id="eventLog" class="event-log"></div></section>
+<section id="yourPanel" class="your-panel"></section>
+</main>
+<nav class="action-bar"><button id="pickBtn" class="premium-btn">🫐 Pick Another</button><button id="breakBtn" class="premium-btn wood">☕ Take a Break</button></nav>
+<div id="modal" class="modal hidden"><div class="modal-card parchment"><h2 id="modalTitle"></h2><div id="modalContent" class="modal-content"></div><div id="modalActions" class="modal-actions"></div></div></div>
+<div id="toast" class="toast hidden"></div>
+<script src="/socket.io/socket.io.js"></script><script src="game-ui.js"></script><script src="game-controller.js"></script></body></html>

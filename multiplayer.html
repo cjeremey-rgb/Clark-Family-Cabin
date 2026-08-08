@@ -1,27 +1,4 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#24140b">
-<title>Huckleberry Bucket — Multiplayer</title><link rel="stylesheet" href="styles.css"></head><body>
-<section id="lobbyScreen" class="lobby-screen rustic-lobby">
-  <div class="lobby-shell wide-lobby"><button id="lobbyHomeBtn" class="back-button">← Back</button>
-    <div class="wood-sign hanging-sign"><h1>Multiplayer</h1><p>Pick Huckleberries</p></div>
-    <div id="entryPanel" class="entry-grid">
-      <div class="mp-tabs">
-        <button id="createTab" class="mp-tab active">Create Room</button>
-        <button id="joinTab" class="mp-tab">Join Room</button>
-      </div>
-      <section id="createPane" class="parchment-panel framed-panel mp-pane"><h2>Create a New Room</h2><label>Your name</label><input id="nameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><label class="mini-label">Max players</label><div class="player-count"><button data-n="2">2</button><button data-n="3" class="selected">3</button><button data-n="4">4</button><button data-n="5">5</button><button data-n="6">6</button></div><button id="createBtn" class="big-button green">Create Room</button><p class="panel-help">Create a room and share the 4-character code with your family. Everyone joins the same room to play together.</p></section>
-      <section id="joinPane" class="parchment-panel framed-panel mp-pane hidden"><h2>Join an Existing Room</h2><label>Enter room code</label><input id="roomCodeInput" maxlength="4" autocapitalize="characters" placeholder="ABCD"><label class="mini-label">Your name</label><input id="joinNameInput" maxlength="18" autocomplete="nickname" placeholder="Enter your name"><button id="joinBtn" class="big-button green">Join Room</button><p class="panel-help">Ask the room host for the 4-character code and enter it above to join the game.</p></section>
-      <p id="entryError" class="error-text full"></p>
-    </div>
-    <div id="roomPanel" class="parchment-panel framed-panel hidden"><div class="room-code-block"><span>ROOM</span><strong id="roomCodeText">----</strong><button id="shareBtn" class="tiny-button">Share</button></div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="host-controls"></div><button id="leaveLobbyBtn" class="text-button">Leave room</button></div>
-  </div>
-</section>
-<main id="gameScreen" class="game-screen hidden">
-<header class="game-header"><button id="gameHomeBtn" class="icon-button">⌂</button><div><h1>Huckleberry Bucket</h1><p id="handLabel">Hand 1 of 5</p></div><button id="rulesBtn" class="icon-button">?</button></header>
-<section id="opponents" class="opponents"></section>
-<section class="table-stage"><div class="draw-area"><button id="deckButton" class="deck-button"><img src="card-back.png" alt="Berry patch deck"><span>Berry Patch</span></button><div class="latest-wrap"><div id="latestPlaceholder" class="latest-placeholder">Latest card</div><img id="latestCard" class="latest-card hidden" alt="Latest drawn card"><div id="latestWho" class="latest-who"></div></div></div><div id="message" class="message">Waiting for the game...</div><div id="eventLog" class="event-log"></div></section>
-<section id="playerPanel" class="player-panel"></section>
-<nav class="action-bar"><button id="pickBtn" class="primary-action">🫐 Pick Another</button><button id="breakBtn" class="secondary-action">☕ Take a Break</button></nav>
-</main>
-<div id="modal" class="modal hidden"><div class="modal-card"><h2 id="modalTitle"></h2><div id="modalContent"></div><div id="modalActions" class="modal-actions"></div></div></div>
-<script src="/socket.io/socket.io.js"></script><script src="multiplayer.js"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2b1409"><title>Huckleberry Bucket — Multiplayer</title><link rel="stylesheet" href="styles.css"></head><body class="cabin-world">
+<section class="lobby-screen"><div class="lobby-shell"><button id="backBtn" class="premium-btn wood back-btn">← Back</button><div class="wood-plaque lobby-title">Multiplayer</div><div id="entryPanel"><div class="tabs"><button id="createTab" class="premium-btn tab-btn">Create Room</button><button id="joinTab" class="premium-btn wood tab-btn">Join Room</button></div><div id="createPane" class="entry-panel parchment"><h2>Create a New Room</h2><label>Your Name</label><input id="nameInput" maxlength="18" placeholder="Enter your name"><label>Max Players</label><div class="player-count"><button data-n="2">2</button><button data-n="3" class="selected">3</button><button data-n="4">4</button><button data-n="5">5</button><button data-n="6">6</button></div><button id="createBtn" class="premium-btn" style="width:100%">Create Room</button><p class="entry-help">Create a room and share the 4-character code. Everyone joins the same room to play together.</p></div><div id="joinPane" class="entry-panel parchment hidden"><h2>Join a Room</h2><label>Room Code</label><input id="roomCodeInput" maxlength="4" placeholder="AB12" style="text-align:center;text-transform:uppercase;letter-spacing:.25em;font-size:22px"><label>Your Name</label><input id="joinNameInput" maxlength="18" placeholder="Enter your name"><button id="joinBtn" class="premium-btn" style="width:100%;margin-top:15px">Join Room</button><p class="entry-help">Ask the host for the 4-character room code and enter it above.</p></div><div id="entryError" class="error-text"></div></div>
+<div id="roomPanel" class="hidden"><div class="entry-panel parchment"><h2>Room Lobby</h2><div class="room-code" id="roomCodeText"></div><button id="shareBtn" class="premium-btn wood" style="width:100%;margin:8px 0 12px">Share Code</button><div id="lobbyPlayers" class="lobby-list"></div><button id="startBtn" class="premium-btn" style="width:100%;margin-top:14px">Start Game</button><button id="leaveBtn" class="premium-btn red" style="width:100%;margin-top:9px">Leave Room</button></div></div></div></section>
+<div id="toast" class="toast hidden"></div><script src="/socket.io/socket.io.js"></script><script src="multiplayer-lobby.js"></script></body></html>

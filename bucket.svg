@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520">
+<defs>
+ <linearGradient id="metal" x1="0" x2="1"><stop stop-color="#687273"/><stop offset=".18" stop-color="#d7dedb"/><stop offset=".45" stop-color="#8d9997"/><stop offset=".7" stop-color="#eef1ee"/><stop offset="1" stop-color="#5e6869"/></linearGradient>
+ <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#eef2ef"/><stop offset="1" stop-color="#667170"/></linearGradient>
+ <radialGradient id="berry"><stop stop-color="#7561c4"/><stop offset=".55" stop-color="#342d79"/><stop offset="1" stop-color="#191645"/></radialGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-opacity=".42"/></filter>
+</defs>
+<g filter="url(#shadow)">
+ <path d="M132 173 L508 173 L470 454 Q320 503 170 454 Z" fill="url(#metal)" stroke="#424b4b" stroke-width="14"/>
+ <ellipse cx="320" cy="172" rx="198" ry="52" fill="#3c4544" stroke="url(#rim)" stroke-width="18"/>
+ <ellipse cx="320" cy="171" rx="172" ry="34" fill="#202928"/>
+ <path d="M150 178 Q122 42 320 28 Q518 42 490 178" fill="none" stroke="#707a79" stroke-width="15" stroke-linecap="round"/>
+ <path d="M163 252 Q320 275 477 252" fill="none" stroke="#586263" stroke-width="9" opacity=".72"/>
+ <path d="M174 337 Q320 360 466 337" fill="none" stroke="#596364" stroke-width="8" opacity=".6"/>
+ <g>
+  <circle cx="210" cy="142" r="41" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="272" cy="124" r="45" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="340" cy="132" r="48" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="410" cy="145" r="42" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="247" cy="174" r="44" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="317" cy="171" r="48" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <circle cx="389" cy="182" r="43" fill="url(#berry)" stroke="#17133c" stroke-width="5"/>
+  <path d="M225 105 q-22-28 -44-7 q30 9 44 7" fill="#486a2e"/><path d="M382 109 q28-31 52-8 q-31 12-52 8" fill="#486a2e"/>
+ </g>
+ <ellipse cx="245" cy="125" rx="8" ry="6" fill="#b6a8ff" opacity=".7"/><ellipse cx="311" cy="145" rx="9" ry="7" fill="#b6a8ff" opacity=".65"/>
+</g></svg>

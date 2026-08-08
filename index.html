@@ -1,31 +1,4 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#142d1f"><title>Clark Family Cabin</title><link rel="stylesheet" href="styles.css">
-</head><body>
-<section id="startScreen" class="start-screen home-start">
-  <img src="startup.png" alt="Clark Family Cabin">
-  <button id="startHotspot" class="start-hotspot" aria-label="Pick Huckleberries"></button>
-</section>
-<section id="modeScreen" class="mode-screen hidden">
-  <div class="mode-shell">
-    <button id="modeBack" class="back-button">← Cabin</button>
-    <div class="wood-sign mode-sign"><h1>Choose Game Mode</h1><p>Huckleberry Bucket</p></div>
-    <div class="mode-cards">
-      <button class="mode-card" id="singleBtn">
-        <img class="mode-bucket" src="mode-bucket.png" alt="Bucket of huckleberries"><h2>Single<br>Player</h2><p>Play against computer opponents.</p><span>Play Solo</span>
-      </button>
-      <button class="mode-card" id="multiBtn">
-        <div class="multi-buckets"><img class="mode-bucket" src="mode-bucket.png" alt="Bucket of huckleberries"><img class="mode-bucket second" src="mode-bucket.png" alt=""></div><h2>Multiplayer</h2><p>Play with family and friends online.</p><span>Play Online</span>
-      </button>
-    </div>
-  </div>
-</section>
-<script>
-const s=document.getElementById('startScreen'),m=document.getElementById('modeScreen');
-document.getElementById('startHotspot').onclick=()=>{s.classList.add('hidden');m.classList.remove('hidden')};
-document.getElementById('modeBack').onclick=()=>{m.classList.add('hidden');s.classList.remove('hidden')};
-document.getElementById('singleBtn').onclick=()=>location.href='singleplayer.html';
-document.getElementById('multiBtn').onclick=()=>location.href='multiplayer.html';
-</script>
-</body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#173224"><title>Clark Family Cabin</title><link rel="stylesheet" href="styles.css"></head><body>
+<section id="home" class="home-screen"><img src="startup.png" alt="Clark Family Cabin"><button id="homePlay" class="home-hotspot" aria-label="Pick Huckleberries"></button></section>
+<section id="mode" class="mode-screen cabin-world hidden"><img class="mode-decor-lantern" src="lantern.svg" alt=""><div class="mode-shell"><button id="modeBack" class="premium-btn wood back-btn">← Cabin</button><div class="wood-plaque mode-title">Choose Game Mode<small>Huckleberry Bucket</small></div><div class="mode-grid"><button id="singleMode" class="mode-choice parchment"><div><h2>Single Player</h2><p>Play the full Huckleberry Bucket game against two computer pickers.</p><span class="mode-cta">Play Solo</span></div><img class="mode-bucket" src="bucket.svg" alt="Metal bucket of huckleberries"></button><button id="multiMode" class="mode-choice parchment"><div><h2>Multiplayer</h2><p>Create a room and play the exact same game with family and friends online.</p><span class="mode-cta">Play Online</span></div><img class="mode-bucket" src="bucket.svg" alt="Metal bucket of huckleberries"></button></div></div></section>
+<script>const h=document.getElementById('home'),m=document.getElementById('mode');homePlay.onclick=()=>{h.classList.add('hidden');m.classList.remove('hidden')};modeBack.onclick=()=>{m.classList.add('hidden');h.classList.remove('hidden')};singleMode.onclick=()=>location.href='game.html?mode=single';multiMode.onclick=()=>location.href='multiplayer.html';</script></body></html>

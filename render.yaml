@@ -2,10 +2,6 @@ services:
   - type: web
     name: clark-family-cabin
     runtime: node
-    plan: free
     buildCommand: npm install
     startCommand: npm start
-    healthCheckPath: /healthz
-    envVars:
-      - key: NODE_VERSION
-        value: 22
+    healthCheckPath: /health
